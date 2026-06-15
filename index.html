@@ -1,1 +1,1101 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Скоро</title><style>html,body{margin:0;height:100%;background:#0C1730;color:#E8ECF4;font-family:-apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;justify-content:center}.b{text-align:center}.t{font-size:clamp(20px,5vw,34px);font-weight:600}.s{margin-top:10px;color:#6B7480;font-size:14px}</style></head><body><div class="b"><div class="t">Презентация готовится</div><div class="s">cco.shirshov.site</div></div></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Смотрю на бизнес как инженер — приложение к резюме</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#11161F; --body:#36404F; --mute:#6B7480;
+    --accent:#2F6BFF; --card-accent:#5AA0FF; --amber:#F7B500;
+    --line:#E9ECF1;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{ font-family:'Manrope',system-ui,sans-serif; color:var(--ink); background:#0b1020; -webkit-font-smoothing:antialiased; }
+
+  /* ===== DECK: scroll-snap по экранам (десктоп) ===== */
+  .deck{ height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+  .screen{ position:relative; height:100vh; scroll-snap-align:start; overflow:hidden; background:#fff; }
+
+  /* ===== STAGE: точный макет 1920×1080, масштабируется целиком (десктоп) ===== */
+  .stage{ position:absolute; top:50%; left:50%; width:1920px; height:1080px;
+    transform:translate(-50%,-50%) scale(var(--s,1)); transform-origin:center; }
+
+  .corner{ position:absolute; left:100px; top:56px;
+    font-family:'IBM Plex Mono',monospace; font-size:15px; letter-spacing:.18em; color:var(--mute); }
+
+  .text-col{ position:absolute; left:100px; top:50%; transform:translateY(-50%); width:610px; }
+  .kicker{ font-family:'IBM Plex Mono',monospace; font-size:15px; letter-spacing:.16em;
+    color:var(--accent); display:flex; align-items:center; gap:14px; margin-bottom:28px; }
+  .kicker::before{ content:""; width:34px; height:3px; background:var(--accent); border-radius:2px; }
+  h1{ font-weight:800; font-size:80px; line-height:1.06; letter-spacing:-.015em; max-width:600px; }
+  .body{ font-weight:400; font-size:23px; line-height:1.55; color:var(--body); max-width:580px; margin-top:38px; }
+  .benefit{ font-size:22px; line-height:1.45; color:var(--body); margin-top:44px; display:flex; gap:12px; align-items:baseline; }
+  .benefit .arrow{ color:var(--accent); font-weight:700; white-space:nowrap; }
+  .benefit b{ font-weight:700; color:var(--ink); }
+
+  /* ----- слайд 1 (Инженер): заголовок → акцент-мысль (ДНК «для вас →») → тело ----- */
+  #s1 h1{ font-size:48px; line-height:1.14; letter-spacing:-.01em; max-width:610px; }
+  .insight{ margin-top:26px; max-width:600px; font-size:24px; line-height:1.4; font-weight:500; color:var(--ink); }
+  .insight .ar{ color:var(--accent); font-weight:800; }
+  .insight b{ color:var(--ink); font-weight:800; }
+  #s1 .body{ font-size:21px; max-width:600px; margin-top:24px; }
+
+  /* ----- метрик-плитки (net-new компонент: экраны 2, 5, 7) — светлые карты в духе .case-cell ----- */
+  .stat-tiles{ display:flex; gap:16px; }
+  .stat-tile{ flex:1; min-width:0; background:#F6F8FA; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:14px; padding:18px 20px; }
+  .stat-tile .st-num{ font-weight:800; font-size:34px; line-height:1; letter-spacing:-.02em; color:var(--amber); }
+  .stat-tile .st-sub{ font-size:15px; line-height:1.35; color:var(--body); margin-top:9px; }
+  .stat-tile .st-sub b{ color:var(--ink); font-weight:700; }
+  /* плитки под текстовой колонкой экрана 2 (узкий ряд под текстом) */
+  #s1 .stat-tiles{ margin-top:32px; max-width:610px; }
+  #s1 .stat-tile .st-num{ font-size:30px; }
+  /* плитки под текстом экрана 5 */
+  #s4 .stat-tiles{ margin-top:28px; max-width:742px; }
+  /* плитки сумм экрана 7 (под степпером) */
+  #s6 .deal-tiles{ margin-top:24px; }
+
+  /* ===== ЭКРАН 0 (Знакомство): карточки на белом, без фоновой плашки ===== */
+  #s0 .text-col{ width:820px; }
+  #s0 h1{ font-size:54px; line-height:1.1; max-width:780px; }
+  #s0 .body{ max-width:740px; }
+
+  /* призыв — акцент-маркер */
+  .cta{ margin-top:34px; max-width:660px; font-weight:600; font-size:25px; line-height:1.4; color:var(--ink); }
+  .cta mark{ background:linear-gradient(transparent 56%, rgba(247,181,0,.42) 56%); color:inherit; padding:0 2px; }
+  .cta b{ color:var(--ink); font-weight:800; }
+
+  /* compare — прозрачный контейнер */
+  .compare{ position:absolute; left:960px; top:50%; transform:translateY(-50%); width:860px;
+    display:flex; flex-direction:column; }
+
+  /* мета: отрисованные элементы + иконки (между телом и призывом) */
+  .meta{ display:flex; align-items:center; gap:28px; margin:34px 0 0; }
+  .meta-item{ display:flex; align-items:center; gap:11px; font-family:'IBM Plex Mono',monospace;
+    font-size:14px; letter-spacing:.04em; color:var(--mute); }
+  .meta-item svg{ flex:none; color:var(--mute); }
+  .film{ display:inline-flex; align-items:flex-end; gap:3px; }
+  .film i{ display:block; width:5px; height:15px; border-radius:1.5px; background:#D7DCE4; }
+  .film i:first-child{ background:var(--accent); height:19px; }
+
+  .cmp-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .cmp-card{ position:relative; border-radius:20px; padding:32px 28px 28px; min-height:436px;
+    display:flex; flex-direction:column; text-decoration:none;
+    border:1px solid var(--line); background:#fff; box-shadow:0 26px 54px -36px rgba(13,23,48,.22); }
+  .cmp-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--mute); margin-bottom:22px; }
+  .cmp-ico{ width:52px; height:52px; margin-bottom:20px; }
+  .cmp-title{ font-weight:700; font-size:27px; line-height:1.18; letter-spacing:-.01em; color:var(--ink); margin-bottom:24px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:auto; }
+  .chip{ font-size:17px; font-weight:500; padding:9px 15px; border-radius:999px;
+    background:#fff; border:1px solid var(--line); color:var(--mute); }
+  .here{ position:absolute; top:20px; right:20px; font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#fff;
+    background:var(--accent); padding:6px 12px; border-radius:999px; font-weight:500; }
+
+  /* Резюме — статичная карточка (без ссылки/ховера/hh.ru) */
+  .cmp-card.resume{ color:var(--mute); }
+  .cmp-card.resume .cmp-title{ color:#6B7686; font-weight:600; }
+  .cmp-card.resume .cmp-ico{ color:var(--mute); }
+
+  /* Презентация — синий акцент (вы здесь) */
+  .cmp-card.now{ border-top:3px solid var(--accent); box-shadow:0 30px 56px -34px rgba(47,107,255,.30); }
+  .cmp-card.now .cmp-eyebrow{ color:var(--accent); }
+  .cmp-card.now .cmp-ico{ color:var(--accent); }
+  .cmp-card.now .chip{ color:var(--ink); }
+
+  /* ===== ЭКРАН 03 (Не завижу от людей): текст справа, схема-картинка слева ===== */
+  #s2 .text-col{ left:980px; width:840px; }
+  #s2 h1{ font-size:54px; line-height:1.1; max-width:780px; }
+  #s2 .body{ max-width:800px; }
+  /* реальная схема — изображение на белом, без подложки/рамки, СЛЕВА */
+  .schema-img{ position:absolute; left:100px; top:50%; transform:translateY(-50%);
+    width:800px; height:auto; display:block; }
+  /* акцент-плашка: что это за схема */
+  .proof{ margin-top:30px; max-width:800px; background:#F6F8FA; border:1px solid var(--line);
+    border-left:3px solid var(--accent); border-radius:12px; padding:18px 24px;
+    font-size:23px; line-height:1.45; color:var(--body); }
+  .proof b{ color:var(--ink); font-weight:700; }
+
+  /* ===== ЭКРАН 04 (Прозрачность): академия + «копни глубже» модалка ===== */
+  #s3 .text-col{ width:660px; }
+  #s3 h1{ font-size:54px; line-height:1.1; max-width:620px; }
+  #s3 .body{ max-width:640px; }
+  /* «копни глубже» — тёмно-синяя кнопка (наша карта), жёлтые элементы; ховер = больше жёлтого */
+  .dig{ margin-top:40px; display:inline-flex; align-items:center; gap:22px; cursor:pointer; max-width:680px;
+    background:linear-gradient(155deg,#1C3460,#0C1730); border:2px solid transparent; border-radius:18px; padding:22px 26px;
+    transition:border-color .18s ease, box-shadow .18s ease; box-shadow:0 20px 46px -24px rgba(13,23,48,.55); }
+  .dig:hover{ border-color:var(--amber); box-shadow:0 26px 56px -22px rgba(13,23,48,.6); }
+  .dig-line{ flex:1; font-weight:600; font-size:19px; line-height:1.34; color:#fff; }
+  .dig-arrow{ flex:none; width:52px; height:52px; border-radius:50%; border:2px solid transparent; color:#11161F;
+    background:var(--amber); display:flex; align-items:center; justify-content:center; font-size:23px; transition:.18s; }
+  .dig:hover .dig-arrow{ background:#FFD04A; box-shadow:0 0 0 4px rgba(247,181,0,.25); }
+  /* академия — слайдер на белом, без рамки (картинки одного размера → не прыгает) */
+  .slider-wrap{ position:absolute; left:810px; top:50%; transform:translateY(-50%); width:1010px;
+    display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:16px; overflow:hidden; box-shadow:0 22px 48px -30px rgba(13,23,48,.32); }
+  /* плашка-«шапка»: примыкает к скрину, единая конструкция (синяя линия сверху — как блок на сл.1) */
+  .slider-cap{ background:#F6F8FA; padding:18px 24px; font-size:23px; line-height:1.4; color:var(--body); }
+  .slider-cap b{ color:var(--ink); font-weight:700; }
+  .slider{ position:relative; width:100%; aspect-ratio:1700 / 1307; }
+  .slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0;
+    transition:opacity .8s ease; transform:translateZ(0); will-change:opacity; }
+  .slide.active{ opacity:1; }
+  /* модалка — почти полноэкранная, 2 колонки: текст слева + медиа справа (без внутр. скролла) */
+  .modal{ position:fixed; inset:0; z-index:60; display:none; }
+  .modal.open{ display:flex; }
+  .modal-bd{ position:absolute; inset:0; background:rgba(8,14,28,.62); backdrop-filter:blur(3px); }
+  .modal-sheet{ position:relative; margin:auto; width:94vw; max-width:1480px; height:90vh;
+    background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 50px 120px -30px rgba(8,14,28,.6);
+    display:grid; grid-template-columns:minmax(340px,400px) 1fr; }
+  .modal-close{ position:absolute; top:18px; right:18px; z-index:3; width:52px; height:52px; border-radius:50%;
+    border:1px solid var(--line); background:#fff; color:var(--body); font-size:26px; cursor:pointer; line-height:1; }
+  .modal-close:hover{ background:#F4F6F9; }
+  .modal-body{ padding:52px 44px; display:flex; flex-direction:column; justify-content:center; overflow:auto; }
+  .modal-h{ font-weight:800; font-size:27px; line-height:1.18; letter-spacing:-.01em; margin-bottom:18px; }
+  .modal-text{ font-size:17px; line-height:1.6; color:var(--body); }
+  .tg-cap{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--mute); margin-top:24px; }
+  .tg-cap b{ color:var(--ink); }
+  /* правая колонка-медиа: артефакт всегда вписан целиком, без скролла */
+  .modal-media{ background:#F3F5F8; border-left:1px solid var(--line); min-width:0;
+    display:flex; align-items:center; justify-content:center; padding:36px; }
+  .modal-media video, .modal-media img{ display:block; max-width:100%; max-height:100%; width:auto; height:auto;
+    border-radius:12px; box-shadow:0 24px 50px -30px rgba(13,23,48,.4); }
+  /* галерея в модалке: авто-смена + стрелки + точки */
+  .gallery{ position:relative; width:100%; height:100%; }
+  .gslide{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:16px; padding:8px 58px; opacity:0; visibility:hidden; transition:opacity .45s ease; }
+  .gslide.active{ opacity:1; visibility:visible; }
+  .gcap{ text-align:center; max-width:600px; flex:none; }
+  .gcap b{ display:block; font-weight:700; font-size:19px; color:var(--ink); margin-bottom:5px; }
+  .gcap span{ font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.45; color:var(--mute); }
+  .gframe{ border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#fff;
+    box-shadow:0 20px 44px -30px rgba(13,23,48,.35); max-width:100%; max-height:calc(100% - 134px); }
+  .gframe img, .gframe video{ display:block; max-width:100%; max-height:100%; width:auto; height:auto; box-shadow:none; border-radius:0; }
+  .gnav{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%;
+    border:1px solid var(--line); background:rgba(255,255,255,.9); color:var(--ink); font-size:26px; line-height:1;
+    cursor:pointer; z-index:4; display:flex; align-items:center; justify-content:center; padding:0; }
+  .gnav:hover{ background:#fff; }
+  .gnav.prev{ left:6px; }
+  .gnav.next{ right:6px; }
+  .gdots{ position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:9px; z-index:4; }
+  .gdot{ width:9px; height:9px; border-radius:50%; background:var(--line); border:none; cursor:pointer; padding:0; }
+  .gdot.active{ background:var(--accent); }
+  /* видео в модалке: подпись справа над роликом */
+  .vid-wrap{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; width:100%; height:100%; }
+  .vid-cap{ text-align:center; max-width:620px; flex:none; }
+  .vid-cap b{ display:block; font-weight:700; font-size:19px; color:var(--ink); margin-bottom:5px; }
+  .vid-cap span{ font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.45; color:var(--mute); }
+  .vid-frame{ border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:0 20px 44px -30px rgba(13,23,48,.35); max-width:100%; max-height:calc(100% - 92px); }
+  .vid-frame video{ display:block; max-width:100%; max-height:100%; width:auto; height:auto; box-shadow:none; border-radius:0; pointer-events:none; }
+  /* текстовый вкладыш (кейс) — одна колонка, без медиа */
+  .modal-sheet.solo{ grid-template-columns:1fr; }
+  .modal-sheet.solo .modal-body{ max-width:1240px; margin:0 auto; padding:40px 56px; overflow:auto; justify-content:center; }
+  .modal-sheet.solo .modal-h{ margin-bottom:0; }
+  .case-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin-top:22px; }
+  .case-cell{ background:#F6F8FA; border:1px solid var(--line); border-top:3px solid var(--accent); border-radius:13px; padding:14px 18px 15px; }
+  .case-cell .n{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.12em; color:var(--accent); }
+  .case-cell b{ display:block; font-size:16px; line-height:1.25; color:var(--ink); margin:5px 0; }
+  .case-cell p{ font-size:14px; line-height:1.4; color:var(--body); margin:0; }
+  .case-result{ margin-top:20px; padding:16px 22px; border-radius:13px; background:#F6F8FA;
+    border-left:4px solid var(--amber); font-size:17px; line-height:1.45; color:var(--ink); }
+  /* мобильный просмотрщик (pinch-zoom) */
+  .viewer{ position:fixed; inset:0; z-index:70; display:none; background:#0B1020; }
+  .viewer.open{ display:block; }
+  .viewer-scroll{ width:100%; height:100%; overflow:auto; -webkit-overflow-scrolling:touch;
+    touch-action:pinch-zoom; display:flex; align-items:center; justify-content:center; padding:14px; }
+  .viewer-scroll img{ width:100%; max-width:none; height:auto; border-radius:8px; }
+  .viewer-close{ position:fixed; top:14px; right:14px; z-index:71; width:46px; height:46px; border-radius:50%;
+    border:none; background:rgba(255,255,255,.16); color:#fff; font-size:24px; line-height:1; }
+
+  /* ===== ЭКРАН 05 (Приоритеты): таблица ТО СЛЕВА, текст + компактные шаги СПРАВА ===== */
+  #s4 .text-col{ left:1078px; width:742px; }
+  #s4 h1{ font-size:52px; line-height:1.1; max-width:720px; }
+  #s4 .body{ max-width:730px; margin-top:28px; }
+  #s4 .cta{ max-width:730px; margin-top:28px; }
+  /* реальная таблица ТО — слева, единая карта: заголовок примыкает к скрину */
+  .to-art{ position:absolute; left:100px; top:50%; transform:translateY(-50%); width:940px;
+    display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:16px; overflow:hidden; box-shadow:0 22px 48px -30px rgba(13,23,48,.32); }
+  .to-cap{ background:#F6F8FA; padding:18px 24px; font-size:23px; line-height:1.4; color:var(--body); }
+  .to-cap b{ color:var(--ink); font-weight:700; }
+  .to-frame{ display:block; }
+  .to-frame img{ display:block; width:100%; height:auto; }
+  /* заглушка hero (экран 5): диагональная штриховка как .tg-ph */
+  .to-ph{ aspect-ratio:1918/1090; display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:48px; color:var(--mute); font-size:21px; line-height:1.5;
+    background:repeating-linear-gradient(45deg,#F6F8FA,#F6F8FA 16px,#EEF1F5 16px,#EEF1F5 32px); }
+  /* компактная лента шагов внутри текста (1→2→3→4) */
+  .steps-mini{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 11px; margin-top:32px; max-width:840px; }
+  .sm{ display:inline-flex; align-items:center; gap:10px; background:#F6F8FA; border:1px solid var(--line);
+    border-radius:999px; padding:8px 17px 8px 8px; }
+  .sm i{ flex:none; width:28px; height:28px; border-radius:50%; background:#fff; border:1.5px solid var(--accent);
+    color:var(--accent); font-style:normal; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+  .sm b{ font-weight:600; font-size:17px; color:var(--ink); }
+  .sm-arr{ color:var(--accent); font-weight:800; font-size:18px; }
+  /* результат 70→130 */
+  .result{ margin-top:30px; display:inline-flex; align-items:baseline; gap:13px; flex-wrap:wrap;
+    background:#F6F8FA; border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:14px; padding:18px 24px; }
+  .r-from{ font-family:'IBM Plex Mono',monospace; font-size:24px; color:var(--mute); }
+  .r-arrow{ color:var(--amber); font-weight:800; font-size:26px; }
+  .r-to{ font-weight:800; font-size:44px; line-height:1; color:var(--amber); letter-spacing:-.02em; }
+  .r-label{ font-size:16px; color:var(--body); align-self:center; }
+  #s4 .dig{ margin-top:30px; }
+  #s5 .dig{ width:680px; max-width:680px; }
+
+  /* ===== ЭКРАН 06 (Считаю копейку): текст + акцент-цитата СЛЕВА, ОПиУ-дашборд СПРАВА ===== */
+  #s5 .text-col{ width:780px; }
+  #s5 h1{ font-size:50px; line-height:1.1; max-width:760px; }
+  #s5 .body{ max-width:740px; margin-top:30px; }
+  .quote{ margin-top:34px; max-width:740px; padding:22px 28px; border-radius:16px;
+    background:#F6F8FA; border:1px solid var(--line); border-left:4px solid var(--amber);
+    font-weight:700; font-size:25px; line-height:1.34; color:var(--ink); letter-spacing:-.01em; }
+  .quote span{ color:var(--amber); }
+  .fin-art{ position:absolute; left:900px; top:50%; transform:translateY(-50%); width:915px;
+    display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:16px; overflow:hidden; box-shadow:0 22px 48px -30px rgba(13,23,48,.32); }
+  .fin-cap{ background:#F6F8FA; padding:18px 24px; font-size:23px; line-height:1.4; color:var(--body); }
+  .fin-cap b{ color:var(--ink); font-weight:700; }
+  /* карусель: 2 артефакта сменяются авто (без стрелок), как в академии */
+  .fin-slider{ position:relative; width:100%; aspect-ratio:1918 / 1090; background:#fff; }
+  .fin-slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+    opacity:0; transition:opacity .8s ease; transform:translateZ(0); will-change:opacity; }
+  .fin-slide.active{ opacity:1; }
+
+  /* ===== ЭКРАН 07 (Когда горит): шахматка СЛЕВА (.to-art), текст + список СПРАВА ===== */
+  #s6 .text-col{ left:1078px; width:742px; }
+  #s6 h1{ font-size:50px; line-height:1.1; max-width:720px; }
+  #s6 .body{ font-size:21px; max-width:730px; margin-top:26px; }
+  .built{ margin-top:30px; }
+  .built-h{ font-family:'IBM Plex Mono',monospace; font-size:15px; letter-spacing:.12em; text-transform:uppercase; color:var(--mute); }
+  .built-list{ list-style:none; display:flex; flex-direction:column; gap:11px; margin-top:15px; max-width:700px; }
+  .built-list li{ position:relative; padding-left:30px; font-size:20px; line-height:1.35; color:var(--ink); }
+  .built-list li::before{ content:"✓"; position:absolute; left:0; top:0; color:var(--accent); font-weight:800; }
+
+  /* экран 07: левый блок «цикл сделки» — степпер + плитки сумм (вместо шахматки) */
+  .deal-art{ position:absolute; left:100px; top:50%; transform:translateY(-50%); width:910px;
+    display:flex; flex-direction:column; gap:24px; }
+  .deal-art .built-h{ margin-bottom:0; }
+  /* карта воронки сделок (живой артефакт Bitrix24) */
+  .funnel-card{ background:#fff; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:16px; overflow:hidden; box-shadow:0 22px 48px -30px rgba(13,23,48,.32); }
+  .funnel-card .to-frame img{ display:block; width:100%; height:auto; }
+  /* степпер: переиспользуем .steps-mini/.sm/.sm-arr; вертикальная лента 1→…→5 */
+  .deal-art .steps-mini{ margin-top:0; max-width:910px; }
+
+  /* ===== ЭКРАН 08 (Провал и уроки): СИНИЙ navy полноэкранный, центрированный ===== */
+  #s7{ background:linear-gradient(160deg,#1C3460 0%,#0C1730 100%); }
+  #s7 .corner{ color:rgba(255,255,255,.5); }
+  #s7 .fail{ position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:80px 180px; }
+  #s7 .fail-kicker{ font-family:'IBM Plex Mono',monospace; font-size:16px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--amber); display:inline-flex; align-items:center; gap:14px; margin-bottom:30px; }
+  #s7 .fail-kicker::before, #s7 .fail-kicker::after{ content:""; width:30px; height:2px; background:var(--amber); border-radius:2px; }
+  #s7 .fail h1{ font-size:60px; line-height:1.1; letter-spacing:-.02em; color:#fff; max-width:1040px; }
+  #s7 .fail-body{ font-size:24px; line-height:1.55; color:rgba(255,255,255,.9); max-width:1120px; margin-top:34px; text-wrap:pretty; }
+  #s7 .fail-body + .fail-body{ margin-top:20px; }
+  #s7 .fail-body b{ color:#fff; font-weight:700; }
+  #s7 .lessons{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; max-width:1180px; width:100%; }
+  #s7 .lesson-card{ background:rgba(255,255,255,.03); border:1.5px solid rgba(247,181,0,.6);
+    border-radius:16px; padding:28px 32px; text-align:left; }
+  #s7 .lesson-card .le{ font-weight:700; font-size:20px; line-height:1.1;
+    color:var(--amber); margin-bottom:16px; letter-spacing:-.01em; }
+  #s7 .le-list{ list-style:none; display:flex; flex-direction:column; gap:13px; }
+  #s7 .le-list li{ position:relative; padding-left:22px; font-size:20px; line-height:1.35; font-weight:500; color:#fff; }
+  #s7 .le-list li::before{ content:""; position:absolute; left:0; top:10px; width:7px; height:7px; border-radius:50%; background:var(--amber); }
+
+  /* ===== ЭКРАН 09 (Автоматизация и ИИ): текст СЛЕВА, телеграм-артефакт СПРАВА ===== */
+  #s8 .text-col{ width:740px; }
+  #s8 h1{ font-size:52px; line-height:1.1; max-width:720px; }
+  #s8 .body{ max-width:720px; margin-top:28px; }
+  #s8 .dig{ margin-top:34px; }
+  .tg-art{ position:absolute; right:100px; top:50%; transform:translateY(-50%); width:860px;
+    display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-top:3px solid var(--accent);
+    border-radius:16px; overflow:hidden; box-shadow:0 22px 48px -30px rgba(13,23,48,.32); }
+  .tg-cap2{ background:#F6F8FA; padding:18px 24px; font-size:23px; line-height:1.4; color:var(--body); }
+  .tg-cap2 b{ color:var(--ink); font-weight:700; }
+  .tg-frame{ display:block; }
+  .tg-frame img{ display:block; width:100%; height:auto; }
+  .tg-ph{ aspect-ratio:1946/1770; display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:48px; color:var(--mute); font-size:20px; line-height:1.5;
+    background:repeating-linear-gradient(45deg,#F6F8FA,#F6F8FA 16px,#EEF1F5 16px,#EEF1F5 32px); }
+  /* экран 09: строка-результат «уберизация расчётов» (амбер-акцент) */
+  #s8 .result{ margin-top:30px; }
+
+  /* ===== ЭКРАН 10 (Давайте встретимся): финальный CTA, центр ===== */
+  #s9 .close-wrap{ position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:80px 180px; }
+  #s9 .kicker{ justify-content:center; }
+  #s9 h1{ font-size:84px; line-height:1.04; letter-spacing:-.02em; max-width:1100px; }
+  #s9 .body{ font-size:24px; line-height:1.55; color:var(--body); max-width:920px; margin-top:30px; }
+  #s9 .cta-row{ display:flex; gap:18px; margin-top:48px; flex-wrap:wrap; justify-content:center; }
+  #s9 .btn{ display:inline-flex; align-items:center; gap:13px; text-decoration:none; border-radius:14px;
+    font-weight:600; font-size:22px; padding:20px 30px; transition:box-shadow .18s, border-color .18s; }
+  #s9 .btn .ic{ flex:none; width:23px; height:23px; }
+  #s9 .btn-primary{ background:linear-gradient(155deg,#1C3460,#0C1730); color:#fff; border:2px solid transparent;
+    box-shadow:0 20px 46px -24px rgba(13,23,48,.55); }
+  #s9 .btn-primary:hover{ border-color:var(--amber); box-shadow:0 26px 56px -22px rgba(13,23,48,.6); }
+  #s9 .btn-primary .ic{ color:var(--amber); }
+  #s9 .btn-secondary{ background:#fff; color:var(--ink); border:1.5px solid var(--line); }
+  #s9 .btn-secondary:hover{ border-color:var(--accent); }
+  #s9 .btn-secondary .ic{ color:var(--accent); }
+
+  /* ----- тёмная карта (метрика) ----- */
+  .card{ container-type:size; position:absolute; left:810px; top:120px; width:1010px; height:840px;
+    aspect-ratio:1010/840; border-radius:28px; overflow:hidden;
+    background:linear-gradient(155deg, #1C3460 0%, #0C1730 100%);
+    box-shadow:0 36px 74px -28px rgba(13,23,48,.55), inset 0 0 0 1px rgba(255,255,255,.07); }
+  .chart-desk{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .chart-mob{ display:none; }
+  .card-info{ position:absolute; left:5.74cqw; top:6.43cqh; width:57cqw; z-index:2; }
+  .card-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:1.29cqw; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--card-accent); margin-bottom:1.1em; }
+  .card-h{ font-weight:700; font-size:3.37cqw; color:var(--amber); letter-spacing:-.01em; margin-bottom:.48em; line-height:1.1; }
+  .card-stat{ font-weight:800; font-size:9.9cqw; line-height:.88; letter-spacing:-.02em; color:#fff; }
+  .card-stat-sub{ font-family:'IBM Plex Mono',monospace; font-size:1.49cqw; color:rgba(255,255,255,.6); margin-top:.66em; margin-bottom:1.5em; }
+  .card-sub{ font-weight:400; font-size:1.98cqw; line-height:1.5; color:rgba(255,255,255,.85); }
+  .card-sub b{ font-weight:600; color:#fff; }
+  .card-note{ font-weight:400; font-size:1.98cqw; line-height:1.5; color:rgba(255,255,255,.55); margin-top:.6em; }
+
+  .v-num{ font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:25px; fill:#fff; }
+  .v-num.peak{ font-size:31px; }
+  .v-unit{ font-family:'IBM Plex Mono',monospace; font-size:14px; fill:rgba(255,255,255,.55); }
+  .y-lbl{ font-family:'IBM Plex Mono',monospace; font-size:18px; letter-spacing:.05em; fill:rgba(255,255,255,.55); }
+  /* мобильный график (компактный, широкий-низкий) */
+  .vm-num{ font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:28px; fill:#fff; }
+  .vm-num.peak{ font-size:34px; }
+  .vm-unit{ font-family:'IBM Plex Mono',monospace; font-size:16px; fill:rgba(255,255,255,.6); }
+  .ym-lbl{ font-family:'IBM Plex Mono',monospace; font-size:21px; letter-spacing:.04em; fill:rgba(255,255,255,.55); }
+
+  /* ВАРИАНТ 2 — единая конструкция: карта + футер метрик одним прямоугольником */
+  .card--v2{ height:870px; top:105px; display:flex; flex-direction:column; padding:0; overflow:hidden; }
+  .card--v2 .card-top{ position:relative; height:710px; }
+  .card--v2 .card-info{ position:absolute; left:58px; top:58px; width:560px; z-index:2; }
+  /* график заполняет верх ТОЧНО (viewBox 1010×710 = аспект card-top) → без шринка/центрирования,
+     левая точка на 58px (вровень с текстом), правый отступ = левому */
+  .card--v2 .chart-desk{ position:absolute; inset:0; width:100%; height:100%; }
+  /* футер: чуть светлее оттенком синего, тонкий хайрлайн без свечения */
+  .card--v2 .card-foot{ display:flex; flex:0 0 160px; height:160px; align-items:stretch;
+    background:rgba(255,255,255,.045); border-top:1px solid rgba(255,255,255,.10); }
+  .card--v2 .cm{ flex:1; min-width:0; padding:0 32px; display:flex; flex-direction:column; justify-content:center; }
+  .card--v2 .cm:first-child{ padding-left:58px; }
+  .card--v2 .cm:last-child{ padding-right:58px; }
+  .card--v2 .cm + .cm{ border-left:1px solid rgba(255,255,255,.10); }
+  .card--v2 .cm-num{ font-weight:800; font-size:46px; line-height:1; letter-spacing:-.02em; color:#fff; }
+  .card--v2 .cm-sub{ font-weight:400; font-size:19px; line-height:1.4; color:rgba(255,255,255,.7); margin-top:11px; }
+
+  /* ===== МОБАЙЛ (≤860px): снап выкл, одна колонка; карта раскладывается вертикально ===== */
+  @media (max-width:860px){
+    .card--v2{ height:auto; top:auto; }
+    .card--v2 .card-info{ position:static; left:auto; top:auto; width:auto; }
+    .card--v2 .chart-desk{ display:none; }
+    .card--v2 .card-foot{ flex-direction:column; }
+    .card--v2 .cm + .cm{ border-left:none; border-top:1px solid rgba(255,255,255,.1); }
+    .card--v2 .cm-num{ font-size:clamp(30px,9vw,46px); }
+    .card--v2 .cm-sub{ font-size:clamp(14px,3.8vw,19px); }
+    html,body{ height:auto; overflow-x:hidden; max-width:100%; }
+    body{ background:#fff; }
+    .deck{ height:auto; overflow:visible; scroll-snap-type:none; }
+    .screen{ height:auto; min-height:100svh; overflow:hidden;
+      padding: clamp(36px,10vw,56px) clamp(20px,6vw,30px) clamp(40px,12vw,60px); }
+    .stage{ position:static; transform:none; width:100%; max-width:100%; height:auto;
+      display:flex; flex-direction:column; gap:clamp(26px,7vw,40px); }
+    /* мобайл: номер+имя живут в кикере, дублирующий «NN / 10» прячем */
+    .corner{ display:none; }
+    .text-col{ position:static; transform:none; width:100%; min-width:0; max-width:100%; }
+    h1{ font-size:clamp(32px,8vw,48px); max-width:none; overflow-wrap:break-word; }
+    .body{ font-size:clamp(15px,4vw,18px); max-width:none; margin-top:1.4em; }
+    .benefit{ font-size:clamp(14px,3.7vw,17px); margin-top:1.7em; }
+    #s1 h1{ font-size:clamp(27px,6.4vw,38px); }
+    .insight{ font-size:clamp(17px,4.6vw,21px); }
+    #s1 .body{ font-size:clamp(15px,4vw,18px); }
+    #s0 .text-col{ width:auto; }
+    #s0 h1{ font-size:clamp(30px,7.2vw,44px); }
+    #s0 .body{ max-width:none; }
+    .cta{ font-size:clamp(19px,5vw,23px); max-width:none; margin-top:1.6em; }
+    .compare{ position:static; transform:none; width:100%; }
+    .meta{ margin:clamp(22px,5.5vw,30px) 0 0; gap:22px; flex-wrap:wrap; }
+    .cmp-grid{ grid-template-columns:1fr; gap:clamp(16px,4.5vw,22px); }
+    .cmp-card{ min-height:0; padding:clamp(22px,6vw,30px); }
+    .cmp-card.resume{ display:none; }   /* на мобайле блок «Резюме» убран */
+    .cmp-ico{ width:clamp(42px,11vw,52px); height:clamp(42px,11vw,52px); margin-bottom:16px; }
+    .cmp-title{ font-size:clamp(20px,5.4vw,25px); margin-bottom:18px; }
+    .chips{ margin-top:18px; }
+    .chip{ font-size:clamp(14px,3.7vw,16px); }
+    .here{ font-size:clamp(10px,2.6vw,12px); }
+    /* экран 03: текст + схема-картинка в стек */
+    #s2 .text-col{ left:auto; width:auto; }
+    #s2 h1{ font-size:clamp(30px,7.2vw,44px); }
+    .proof{ font-size:clamp(15px,4vw,18px); max-width:none; }
+    .schema-img{ position:static; transform:none; width:100%; height:auto; cursor:zoom-in; }
+
+    /* экран 04: академия + модалка + просмотрщик */
+    #s3 h1{ font-size:clamp(30px,7.2vw,44px); }
+    .dig{ margin-top:1.6em; max-width:none; width:100%; gap:18px; }
+    .dig-line{ font-size:clamp(16px,4.3vw,19px); }
+    .slider-wrap{ position:static; transform:none; width:100%; }
+    .slider-cap{ font-size:clamp(15px,4vw,18px); padding:15px 18px; }
+    .modal-sheet{ width:100vw; max-width:100vw; height:100svh; max-height:100svh; border-radius:0;
+      display:flex; flex-direction:column; overflow:auto; }
+    .modal-body{ padding:clamp(56px,11vw,64px) clamp(20px,6vw,26px) clamp(18px,5vw,24px); justify-content:flex-start; overflow:visible; }
+    .modal-h{ font-size:clamp(23px,6vw,28px); }
+    .modal-text{ font-size:clamp(15px,4vw,17px); }
+    .modal-media{ border-left:none; border-top:1px solid var(--line); padding:clamp(16px,5vw,28px); }
+    .modal-media video, .modal-media img{ max-height:none; width:100%; }
+    .modal-media img{ cursor:zoom-in; }
+    .modal-media .gallery{ height:72vh; }
+    .gslide{ padding:6px 42px; }
+    .gframe{ max-height:calc(100% - 84px); }
+    .gframe img{ width:auto; }
+    .modal-sheet.solo .modal-body{ padding:clamp(56px,11vw,64px) clamp(20px,6vw,26px) clamp(32px,8vw,48px); max-width:none; }
+    .case-grid{ grid-template-columns:1fr; gap:12px; }
+    .case-cell b{ font-size:clamp(16px,4.4vw,18px); }
+    .case-cell p{ font-size:clamp(14px,3.8vw,15px); }
+    .case-result{ font-size:clamp(16px,4.2vw,18px); }
+
+    /* экран 05: таблица ТО + текст/шаги в стек */
+    #s4 .text-col{ left:auto; width:auto; }
+    #s4 h1{ font-size:clamp(30px,7.2vw,44px); }
+    .to-art{ position:static; transform:none; width:100%; }
+    .to-cap{ font-size:clamp(15px,4vw,18px); }
+    .steps-mini{ margin-top:1.6em; gap:8px; flex-direction:column; align-items:flex-start; }
+    .sm b{ font-size:clamp(14px,3.9vw,16px); }
+    .sm-arr{ display:none; }
+    .result{ margin-top:1.4em; }
+    .r-to{ font-size:clamp(38px,12vw,44px); }
+    #s4 .dig{ margin-top:1.6em; }
+
+    /* экран 06: ОПиУ + текст/цитата в стек */
+    #s5 .text-col{ width:auto; }
+    #s5 h1{ font-size:clamp(28px,6.8vw,40px); }
+    .quote{ font-size:clamp(18px,4.8vw,22px); max-width:none; margin-top:1.6em; }
+    .fin-art{ position:static; transform:none; width:100%; }
+    .fin-cap{ font-size:clamp(15px,4vw,18px); }
+
+    /* экран 07: степпер + плитки + текст в стек */
+    #s6 .text-col{ left:auto; width:auto; }
+    #s6 h1{ font-size:clamp(28px,6.8vw,40px); }
+    #s6 .body{ font-size:clamp(15px,4vw,18px); }
+    .built-list li{ font-size:clamp(15px,4vw,17px); }
+    .deal-art{ position:static; transform:none; width:100%; gap:clamp(18px,5vw,24px); }
+    .deal-art .steps-mini{ flex-direction:column; align-items:stretch; gap:8px; }
+    .deal-art .sm{ width:100%; }
+
+    /* метрик-плитки: в стек на мобайле */
+    .stat-tiles{ flex-direction:column; gap:clamp(12px,3.5vw,16px); }
+    #s1 .stat-tiles, #s4 .stat-tiles{ max-width:none; }
+    .stat-tile .st-num{ font-size:clamp(28px,8vw,34px); }
+    #s1 .stat-tile .st-num{ font-size:clamp(26px,7.5vw,30px); }
+    .stat-tile .st-sub{ font-size:clamp(13px,3.6vw,15px); }
+    /* заглушка hero (экран 5) */
+    .to-ph{ font-size:clamp(15px,4vw,18px); padding:clamp(28px,8vw,48px); }
+
+    /* экран 08: синий navy, центрированный стек */
+    #s7 .fail{ position:static; inset:auto; padding:0; }
+    #s7 .fail-kicker{ font-size:clamp(12px,3.2vw,14px); margin-bottom:1.2em; }
+    #s7 .fail h1{ font-size:clamp(28px,7vw,40px); max-width:none; }
+    #s7 .fail-body{ font-size:clamp(16px,4.3vw,19px); margin-top:1.3em; max-width:none; }
+    #s7 .lessons{ grid-template-columns:1fr; gap:14px; margin-top:1.6em; }
+    #s7 .lesson-card{ padding:clamp(22px,6vw,30px); }
+    #s7 .lesson-card .le{ font-size:clamp(17px,4.6vw,20px); margin-bottom:.7em; }
+    #s7 .le-list li{ font-size:clamp(16px,4.3vw,19px); }
+
+    /* экран 09: текст + телеграм-артефакт в стек */
+    #s8 .text-col{ width:auto; }
+    #s8 h1{ font-size:clamp(30px,7.2vw,44px); }
+    #s8 .dig{ margin-top:1.6em; }
+    .tg-art{ position:static; transform:none; width:100%; }
+    .tg-cap2{ font-size:clamp(15px,4vw,18px); }
+    .tg-ph{ font-size:clamp(15px,4vw,17px); padding:clamp(28px,8vw,48px); }
+
+    /* экран 10: финальный CTA в стек */
+    #s9 .close-wrap{ position:static; inset:auto; padding:0; }
+    #s9 h1{ font-size:clamp(34px,9vw,56px); max-width:none; }
+    #s9 .body{ font-size:clamp(16px,4.3vw,19px); max-width:none; margin-top:1.4em; }
+    #s9 .cta-row{ flex-direction:column; gap:12px; margin-top:1.9em; width:100%; }
+    #s9 .btn{ width:100%; justify-content:center; font-size:clamp(17px,4.6vw,20px); padding:17px 24px; }
+
+    /* карта: авто-высота, вертикальный стек, читаемые размеры (не container-units) */
+    .card{ container-type:normal; position:relative; left:auto; top:auto; width:100%; height:auto;
+      aspect-ratio:auto; display:flex; flex-direction:column;
+      padding: clamp(24px,6.5vw,34px); gap: clamp(18px,4.5vw,24px); border-radius:22px;
+      box-shadow:0 14px 34px -22px rgba(13,23,48,.30), inset 0 0 0 1px rgba(255,255,255,.07); }
+    .chart-desk{ display:none; }
+    .chart-mob{ display:block; width:100%; height:auto; }
+    .card-info{ position:static; width:auto; }
+    .card-eyebrow{ font-size:clamp(11px,2.8vw,13px); margin-bottom:1em; }
+    .card-h{ font-size:clamp(19px,5.2vw,26px); margin-bottom:.4em; }
+    .card-stat{ font-size:clamp(54px,17vw,78px); }
+    .card-stat-sub{ font-size:clamp(11px,3.1vw,13px); margin-top:.6em; margin-bottom:1.1em; }
+    .card-sub{ font-size:clamp(14px,3.7vw,16px); }
+    .card-note{ font-size:clamp(13px,3.4vw,15px); }
+  }
+</style>
+</head>
+<body>
+  <div class="deck">
+
+    <!-- ===== ЭКРАН 0 · ЗНАКОМСТВО ===== -->
+    <section class="screen" id="s0">
+      <div class="stage">
+        <div class="corner">01 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">01 · знакомство</div>
+          <h1>Подход, который работает почти в любом бизнесе</h1>
+          <p class="body">Здравствуйте, я Алексей Ширшов. Покажу свой подход к работе: он применим почти к любому бизнесу, а не только к стройке. В резюме — опыт и цифры, а здесь принципы, которыми руководствуюсь, рабочие инструменты и доказательства к ним.</p>
+          <div class="meta">
+            <div class="meta-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3.2 2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>≈ 7 минут</span>
+            </div>
+            <div class="meta-item">
+              <span class="film"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span>10 слайдов</span>
+            </div>
+          </div>
+          <p class="cta">За <mark>7 минут</mark> вы поймёте обо мне больше, <b>чем за час собеседования</b></p>
+        </div>
+
+        <div class="compare">
+          <div class="cmp-grid">
+            <div class="cmp-card resume">
+              <div class="cmp-eyebrow">резюме</div>
+              <svg class="cmp-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" aria-hidden="true">
+                <rect x="10" y="6" width="28" height="36" rx="4" stroke-width="2.2"/>
+                <line x1="16" y1="16" x2="32" y2="16" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="16" y1="23" x2="32" y2="23" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="16" y1="30" x2="26" y2="30" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+              <div class="cmp-title">Опыт и цифры</div>
+              <div class="chips"><span class="chip">опыт</span><span class="chip">цифры</span><span class="chip">обязанности</span></div>
+            </div>
+            <div class="cmp-card now">
+              <div class="here">вы здесь</div>
+              <div class="cmp-eyebrow">презентация</div>
+              <svg class="cmp-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" aria-hidden="true">
+                <rect x="7" y="9" width="34" height="24" rx="3.5" stroke-width="2.4"/>
+                <path d="M17 27 L22 21 L27 24 L33 16" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="24" y1="33" x2="24" y2="39" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="18" y1="40" x2="30" y2="40" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+              <div class="cmp-title">Подход, доказательства и главные провалы</div>
+              <div class="chips"><span class="chip">подход</span><span class="chip">доказательства</span><span class="chip">кейсы</span><span class="chip">главные провалы</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 1 · ИНЖЕНЕР ===== -->
+    <section class="screen" id="s1">
+      <div class="stage">
+        <div class="corner">02 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">02 · инженер</div>
+          <h1>Не просто управляю, а проектирую систему, которая приносит выручку и маржу</h1>
+          <p class="insight">Люди в ней важны, а процессы ведут к предсказуемой выручке <span class="ar">→</span> <b>деньгам компании</b>.</p>
+          <p class="body">Я инженер из строительной сферы, и проектировать — мой профессиональный навык. Я адаптировал его к системе, управлению и даже продажам.</p>
+        </div>
+
+        <div class="card card--v2">
+          <div class="card-top">
+          <div class="card-info">
+            <div class="card-h">Рост валовой маржи</div>
+            <div class="card-stat">360%</div>
+            <div class="card-stat-sub">2022 → 2025 год — рост в 4,6 раза</div>
+            <div class="card-sub">данные по отделам под моим управлением: <b>отдел продаж, техобслуживание, тендерный отдел</b></div>
+          </div>
+
+          <!-- десктоп: график заполняет верх карты ТОЧНО (аспект 1010×710) -->
+          <svg class="chart-desk" viewBox="0 0 1010 710" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="trace" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F7B500" stop-opacity=".40"/>
+                <stop offset="1" stop-color="#F7B500" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="7" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g stroke="rgba(255,255,255,.05)" stroke-width="1">
+              <line x1="58" y1="254" x2="952" y2="254"/><line x1="58" y1="347" x2="952" y2="347"/>
+              <line x1="58" y1="440" x2="952" y2="440"/><line x1="58" y1="533" x2="952" y2="533"/>
+              <line x1="58" y1="169" x2="58" y2="626"/><line x1="356" y1="169" x2="356" y2="626"/>
+              <line x1="654" y1="169" x2="654" y2="626"/><line x1="952" y1="169" x2="952" y2="626"/>
+            </g>
+            <path d="M58,532 L356,545 L654,380 L952,194 L952,626 L58,626 Z" fill="url(#trace)"/>
+            <path d="M58,532 L356,545 L654,380 L952,194" fill="none"
+                  stroke="#F7B500" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+            <g filter="url(#glow)">
+              <circle cx="58" cy="532" r="6.5" fill="#FFD45E"/><circle cx="356" cy="545" r="6.5" fill="#FFD45E"/>
+              <circle cx="654" cy="380" r="6.5" fill="#FFD45E"/><circle cx="952" cy="194" r="8" fill="#FFE9A8"/>
+            </g>
+            <text class="v-num" x="58" y="506" text-anchor="start">21<tspan class="v-unit" dx="5">млн ₽</tspan></text>
+            <text class="v-num" x="356" y="520" text-anchor="middle">18<tspan class="v-unit" dx="5">млн ₽</tspan></text>
+            <text class="v-num" x="654" y="355" text-anchor="middle">55<tspan class="v-unit" dx="5">млн ₽</tspan></text>
+            <text class="v-num peak" x="952" y="168" text-anchor="end">97<tspan class="v-unit" dx="5">млн ₽</tspan></text>
+            <text class="y-lbl" x="58" y="656" text-anchor="start">2022</text>
+            <text class="y-lbl" x="356" y="656" text-anchor="middle">2023</text>
+            <text class="y-lbl" x="654" y="656" text-anchor="middle">2024</text>
+            <text class="y-lbl" x="952" y="656" text-anchor="end">2025</text>
+          </svg>
+
+          <!-- мобайл: компактный широкий график отдельным блоком -->
+          <svg class="chart-mob" viewBox="0 0 600 372" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="traceM" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F7B500" stop-opacity=".40"/>
+                <stop offset="1" stop-color="#F7B500" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="glowM" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g stroke="rgba(255,255,255,.06)" stroke-width="1">
+              <line x1="8" y1="110" x2="592" y2="110"/><line x1="8" y1="180" x2="592" y2="180"/>
+              <line x1="8" y1="250" x2="592" y2="250"/>
+            </g>
+            <path d="M8,252 L203,259 L397,174 L592,78 L592,300 L8,300 Z" fill="url(#traceM)"/>
+            <path d="M8,252 L203,259 L397,174 L592,78" fill="none"
+                  stroke="#F7B500" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowM)"/>
+            <g filter="url(#glowM)">
+              <circle cx="8" cy="252" r="5.5" fill="#FFD45E"/><circle cx="203" cy="259" r="5.5" fill="#FFD45E"/>
+              <circle cx="397" cy="174" r="5.5" fill="#FFD45E"/><circle cx="592" cy="78" r="6.5" fill="#FFE9A8"/>
+            </g>
+            <text class="vm-num" x="8" y="236" text-anchor="start">21<tspan class="vm-unit" dx="5">млн ₽</tspan></text>
+            <text class="vm-num" x="203" y="243" text-anchor="middle">18<tspan class="vm-unit" dx="5">млн ₽</tspan></text>
+            <text class="vm-num" x="397" y="158" text-anchor="middle">55<tspan class="vm-unit" dx="5">млн ₽</tspan></text>
+            <text class="vm-num peak" x="592" y="58" text-anchor="end">97<tspan class="vm-unit" dx="5">млн ₽</tspan></text>
+            <text class="ym-lbl" x="8" y="345" text-anchor="start">2022</text>
+            <text class="ym-lbl" x="203" y="345" text-anchor="middle">2023</text>
+            <text class="ym-lbl" x="397" y="345" text-anchor="middle">2024</text>
+            <text class="ym-lbl" x="592" y="345" text-anchor="end">2025</text>
+          </svg>
+          </div><!-- /card-top -->
+
+          <div class="card-foot">
+            <div class="cm"><div class="cm-num">×6</div><div class="cm-sub">средний чек: был 300 тыс ₽ → теперь 2+ млн ₽</div></div>
+            <div class="cm"><div class="cm-num">350+</div><div class="cm-sub">млн ₽ — сумма контрактов за 2025 год</div></div>
+            <div class="cm"><div class="cm-num">99,8%</div><div class="cm-sub">удержание клиентов в месяц · 1 менеджер : 130</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 03 · СИСТЕМА (НЕ ЗАВИЖУ ОТ ЛЮДЕЙ) ===== -->
+    <section class="screen" id="s2">
+      <div class="stage">
+        <div class="corner">03 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">03 · система</div>
+          <h1>Снижаю зависимость бизнеса от людей, включая себя самого</h1>
+          <p class="body">Любой бизнес работает руками людей, но я снижаю зависимость от незаменимых — и от себя в том числе. Процессы и правила описаны, знание держит система, а не один человек. Замена не обнуляет результат: новый входит по инструкции, преемник продолжает по описанному. Эту систему я переношу из отрасли в отрасль и адаптирую под бизнес, и она работает без меня, на любом штате.</p>
+          <div class="dig" data-modal-target="modal-repeat">
+            <span class="dig-line">Узнайте, как один и тот же подход сработал в трёх разных отраслях</span>
+            <div class="dig-arrow">→</div>
+          </div>
+        </div>
+
+        <img class="schema-img" src="assets/schema.svg" alt="Карта процессов компании — лиды, отделы, статусы, реализация" id="schemaImg">
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 04 · ПРОЗРАЧНОСТЬ ===== -->
+    <section class="screen" id="s3">
+      <div class="stage">
+        <div class="corner">04 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">04 · прозрачность</div>
+          <h1>Понятна сотрудникам и прозрачна для руководства</h1>
+          <p class="body">Систему мало спроектировать — её нужно внедрить и поддерживать без лишней бюрократии: только те правила и знания, что помогают работать и продавать. Обучающие материалы собираю в академию, так новичку проще выйти на линию, а отдел контроля качества не карает, а подсказывает, что поправить, и подсвечивает руководству проблемные места.</p>
+          <div class="dig" data-modal-target="modal-okk">
+            <span class="dig-line">Узнайте больше, как и зачем один отдел следит за порядком почти во всей компании</span>
+            <div class="dig-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="slider-wrap">
+          <div class="slider-cap">Скриншот из <b>собственной академии</b>, в которой мы обучали новых сотрудников</div>
+          <div class="slider" id="slider">
+            <img class="slide active" src="assets/academy.png" alt="Академия — список обучающих модулей">
+            <img class="slide" src="assets/gc-module.png" alt="Модуль академии — разделы по системам компании">
+            <img class="slide" src="assets/lesson.png" alt="Урок академии — авторское видео и презентация">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 05 · ПРИОРИТЕТЫ (таблица ТО слева, текст+шаги справа) ===== -->
+    <section class="screen" id="s4">
+      <div class="stage">
+        <div class="corner">05 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">05 · метрики продаж</div>
+          <h1>Управляю продажами по цифрам, а не по интуиции</h1>
+          <p class="body">План-факт смотрю каждый день, неделю и месяц — по отделу и по менеджеру. Вижу слабые места, которые влияют на результат, и работаю над ними. Строю систему, которая даёт предсказуемость и управляемость, и нанимаю в неё звёзд, которые её усиливают. Одно не вместо другого. Добавляем к этому продажи через экспертность с помощью обучения, процессов и маркетинговых материалов — и получаем результат.</p>
+          <p class="cta">Средний чек вырос <mark>в 6 раз</mark> — с 300 тыс. ₽ до 2+ млн ₽, и это рост на системе, а не на разовых сделках.</p>
+        </div>
+
+        <div class="to-art">
+          <div class="to-cap"><b>Срез показателей отдела продаж</b>: план/факт по активности, договоры и маржа в одном экране</div>
+          <div class="to-frame"><img src="assets/srez-op.png" alt="Срез показателей отдела продаж — план/факт по активности, договоры и маржа" id="srezImg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 06 · СЧИТАЮ КОПЕЙКУ (текст+цитата слева, ОПиУ-дашборд справа) ===== -->
+    <section class="screen" id="s5">
+      <div class="stage">
+        <div class="corner">06 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">06 · маркетинг и ROMI</div>
+          <h1>Трачу миллионы на маркетинг и возвращаю кратно</h1>
+          <p class="body">Маркетинг — не статья затрат, а инвестиция с измеримой отдачей. Бюджет ~550 тыс. ₽/мес, сквозная аналитика, когортный ROMI-анализ. CPL в Яндекс.Директе снизил на <b>30%</b> на старте и держал годами, несмотря на рост цены трафика. Каждый канал считаю по вкладу в маржу, а не по кликам.</p>
+          <p class="cta">Каждый рубль рекламы возвращается маржой <mark>более чем в 11 раз</mark> — ROMI отдела продаж <b>1127%</b> по факту.</p>
+          <div class="dig" data-modal-target="modal-money">
+            <span class="dig-line">Узнайте, как я считаю каждую копейку и веду Unit-экономику</span>
+            <div class="dig-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="fin-art">
+          <div class="fin-cap" id="finCap"></div>
+          <div class="fin-slider" id="finSlider">
+            <img class="fin-slide active" src="assets/romi1.png" data-cap="Когортный ROMI-анализ по отделу продаж. ROMI факт = валовая маржа / расходы на рекламу = 96,4 / 8,55 млн ₽ ≈ 1127% (план — 956%)." alt="Когортный ROMI-анализ по отделу продаж — маржа, затраты, ROMI по когортам">
+            <img class="fin-slide" src="assets/hyg.png" data-cap="Маркетинговый дашборд: заявки, квал. лиды, CPL и план/факт по каналам в одном окне." alt="Маркетинговый дашборд — заявки, квал. лиды, CPL, план/факт по каналам">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 07 · КОГДА ГОРИТ (шахматка слева, текст+список справа) ===== -->
+    <section class="screen" id="s6">
+      <div class="stage">
+        <div class="corner">07 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">07 · крупные сделки</div>
+          <h1>Веду крупные сделки лично и помогаю с ними менеджерам, когда это нужно</h1>
+          <p class="body">У меня большой опыт переговоров на уровне первых лиц крупных компаний. Для меня не составит труда защитить КП или решить сложную ситуацию. Но в норме крупные сделки идут через команду — себе их не забираю, чтобы люди зарабатывали. Подключаюсь лично там, где это необходимо, но контролирую каждую сделку через систему.</p>
+          <div class="dig" data-modal-target="modal-case">
+            <span class="dig-line">Узнайте, как я с нуля собрал команду и спас горящий объект за три недели</span>
+            <div class="dig-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="deal-art">
+          <div class="funnel-card">
+            <div class="to-cap">Воронка сделок в <b>Bitrix24</b>: каждая идёт по этапам — от финального КП до договора, с суммой и маржой по сделке</div>
+            <div class="to-frame"><img src="assets/deal-funnel.png" alt="Воронка сделок Bitrix24 — этапы от финального КП до договора" id="funnelImg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 08 · ПРОВАЛ И УРОК (синий полноэкранный, центрированный — «большое НО») ===== -->
+    <section class="screen" id="s7">
+      <div class="stage">
+        <div class="corner">08 / 10</div>
+
+        <div class="fail">
+          <div class="fail-kicker">08 · провал и уроки</div>
+          <h1>Мой главный провал и уроки, которые я из него вынес</h1>
+          <p class="fail-body">В какой-то момент партнёры сделали ставку на тендеры и крупных застройщиков. Ушли в это направление почти на <b>80%</b>. Объекты брали в обход расчётов и планирования. Объёмы росли быстро, а вместе с ними так же быстро и бесконтрольно раздувался штат. Дальше пошло по нарастающей: кассовые разрывы по отдельным объектам и заказчики, по которым дебиторка постоянно росла.</p>
+          <p class="fail-body">Я не раз пытался переубедить партнёров сменить стратегию, но не вышло. Потом, уже в процессе, помогал им обуздать хаос, но тоже без толку. Так тянулось <b>больше полутора лет</b>, пока мы не разошлись. Компания осталась с большими финансовыми трудностями, и куда она идёт сейчас, непонятно.</p>
+          <div class="lessons">
+            <div class="lesson-card">
+              <div class="le">Мои ошибки</div>
+              <ul class="le-list">
+                <li>Тащил операционку вместо работы над реальной проблемой.</li>
+                <li>Систему строил и вёл недостаточно строго: её можно было обходить без последствий.</li>
+                <li>Переоценил, что выправлю ситуацию изнутри, не выходя за свою зону.</li>
+              </ul>
+            </div>
+            <div class="lesson-card">
+              <div class="le">Мои уроки</div>
+              <ul class="le-list">
+                <li>Договариваться о стратегии на берегу и пересматривать как можно чаще, с выгодой обеим сторонам.</li>
+                <li>Делать систему прозрачнее и эффективнее, чтобы в ней не заводились «бомбы замедленного действия».</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 09 · АВТОМАТИЗАЦИЯ И ИИ (текст слева, телеграм-артефакт справа) ===== -->
+    <section class="screen" id="s8">
+      <div class="stage">
+        <div class="corner">09 / 10</div>
+
+        <div class="text-col">
+          <div class="kicker">09 · автоматизация</div>
+          <h1>Автоматизирую коммерцию: ниже издержки, выше маржа</h1>
+          <p class="body">Данные сводятся сами, отчёты и презентации генерируются без меня, а ИИ стоит в реальных рабочих функциях — контроль качества, SEO, реклама, часть дизайна. Это снижает стоимость привлечения и поднимает маржу. Сейчас делаю это на свои и в своей зоне: не обещаю чужой компании готовую экономию, но инструменты и подход переношу.</p>
+          <div class="dig" data-modal-target="modal-bus">
+            <span class="dig-line">Узнайте, как я автоматизировал отчётность и сбор данных почти во всей компании</span>
+            <div class="dig-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="tg-art">
+          <div class="tg-cap2">ИИ-бот в ТГ присылает отчёты по: маркетингу, контролю качества и SEO</div>
+          <div class="tg-frame"><img src="assets/ai-reports.png" alt="ИИ-боты в телеграме присылают автоотчёты по отделам — маркетинг, ОКК, SEO" id="aiImg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 10 · ДАВАЙТЕ ВСТРЕТИМСЯ (финальный CTA, центр) ===== -->
+    <section class="screen" id="s9">
+      <div class="stage">
+        <div class="corner">10 / 10</div>
+
+        <div class="close-wrap">
+          <div class="kicker">10 · встреча</div>
+          <h1>Давайте встретимся</h1>
+          <p class="body">За час на примерах покажу, что мой подход применим к вашему бизнесу. Власть забирать не собираюсь — наоборот, объясню, как система работает без меня. Разберу, как мыслю про процессы, попробую сразу предложить варианты: где навести порядок, что внедрить, где забрать первые деньги. Это мини-аудит, а не рассказ обо мне.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://t.me/leadmaker" target="_blank" rel="noopener">
+              <svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.6 13.5l-4.8-1.5c-1-.3-1-.9.2-1.4l18.8-7.2c.9-.3 1.6.2 1.3 1.4Z"/></svg>
+              Написать в Telegram
+            </a>
+            <a class="btn btn-secondary" href="tel:+79251084548">
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+              +7 925 108 45 48
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- модалка Повторяемость (экран 03) — текстовый вкладыш -->
+  <div class="modal" id="modal-repeat">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet solo">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">Один плейбук — три разные отрасли</h2>
+        <p class="modal-text">Одну и ту же коммерческую систему я собирал в трёх разных отраслях. B2B-инжиниринг (ДВ Проджект), онлайн-школа естественного омоложения (Академия Юлии Сайфулиной, рост ×8) и розница напольных покрытий (Дом Пола) — разные рынки, один подход: привлечение → продажа → удержание на цифрах. Поэтому система не привязана к стройке и переносится на ваш бизнес.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- модалка ОКК (экран 04) -->
+  <div class="modal" id="modal-okk">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">Отдел контроля качества: помогает, а не карает</h2>
+        <p class="modal-text">Отдел контроля качества по расписанию проверяет продажи, расчёты, сервис и финансы: на скрипты, регламенты, метрики и аномалии. Сначала подсказывает и даёт время на исправление, помогает разобраться. И только потом, если ошибка системна, фиксирует отклонение в отчёте для руководителя. Так у руководителей снижаются трудозатраты, и они могут заниматься более эффективной работой, а сотрудники понимают, что есть контроль, и начинают более качественно выполнять процессы.</p>
+      </div>
+      <div class="modal-media">
+        <div class="gallery" data-auto="5500">
+          <div class="gslide active">
+            <div class="gcap"><b>ОКК · финансы</b><span>Проверяет, что все расходы в системе финансовой отчётности разнесены. Это позволяет иметь точную отчётность по каждому объекту и отделу.</span></div>
+            <div class="gframe"><img src="assets/okk-fin.png" alt="Отчёт ОКК по финансам — суммы и названия скрыты (NDA)"></div>
+          </div>
+          <div class="gslide">
+            <div class="gcap"><b>ОКК · отдел продаж</b><span>Сверяет разговоры менеджера со сценарием и стандартом компании через ИИ и выводит показатель соответствия (87–100%).</span></div>
+            <div class="gframe"><img src="assets/okk-scenario.png" alt="Отчёт ОКК — соблюдение сценария разговора, фамилии скрыты (NDA)"></div>
+          </div>
+          <div class="gslide">
+            <div class="gcap"><b>ОКК · отдел продаж</b><span>Проверка качества работы в CRM: ведение сделок на предмет слитых клиентов и потерянных сделок, которым нужен дополнительный контроль.</span></div>
+            <div class="gframe"><img src="assets/okk-tasks.png" alt="Отчёт ОКК — сделки без задач, имена и ссылки скрыты (NDA)"></div>
+          </div>
+          <button class="gnav prev" data-gprev aria-label="Назад">‹</button>
+          <button class="gnav next" data-gnext aria-label="Вперёд">›</button>
+          <div class="gdots"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- модалка Шаблоны (экран 05) -->
+  <div class="modal" id="modal-tpl">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">Создали шаблоны вместо найма дополнительных сотрудников</h2>
+        <p class="modal-text">Нам не хватало проектировщиков под выполнение расчётов и аудитов рабочей документации. Мы создали шаблоны с готовыми решениями, поставщиками, чек-листами и системой проверок, которые автоматически заполняют файл и дают комментарии для клиента. В итоге количество расчётов и проверок РД увеличилось, а их качество стало лучше.</p>
+      </div>
+      <div class="modal-media">
+        <div class="vid-wrap">
+          <div class="vid-cap"><b>Сервис генерации аудита РД</b><span>демонстрация того, как работает сервис генерации аудитов рабочей документации · демо-данные, без NDA</span></div>
+          <div class="vid-frame"><video src="assets/pdf-gen.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Сервис генерации аудита рабочей документации" id="tplVid"></video></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- модалка «считаю копейку» (экран 06) — текст слева + галерея справа -->
+  <div class="modal" id="modal-money">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">А ещё считаю каждую копейку</h2>
+        <p class="modal-text">Маркетингом не ограничиваюсь — держу под контролем всю экономику. Платёжный календарь, отчёты по прибыли и движению денег: вижу, где деньги, когда придут и не грозит ли кассовый разрыв. По каждому объекту прибыль и убыток с точностью до 5–10 тысяч, плюс юнит-экономика по клиентам на техобслуживании.</p>
+      </div>
+      <div class="modal-media">
+        <div class="gallery" data-auto="5500">
+          <div class="gslide active">
+            <div class="gcap"><b>ОПиУ по объекту</b><span>сводит данные из десятка источников и разные методы учёта в один отчёт</span></div>
+            <div class="gframe"><img src="assets/fin-report.png" alt="ОПиУ по объекту — суммы скрыты (NDA)"></div>
+          </div>
+          <div class="gslide">
+            <div class="gcap"><b>Юнит-экономика по клиентам ТО</b><span>маржа по каждому клиенту на обслуживании</span></div>
+            <div class="gframe"><img src="assets/fin-unit.png" alt="Юнит-экономика по клиентам ТО — без названий объектов"></div>
+          </div>
+          <button class="gnav prev" data-gprev aria-label="Назад">‹</button>
+          <button class="gnav next" data-gnext aria-label="Вперёд">›</button>
+          <div class="gdots"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- модалка кейса (экран 07) — текстовый вкладыш -->
+  <div class="modal" id="modal-case">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet solo">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">Авиатика: собрал команду с нуля и навёл учёт там, где его не было</h2>
+        <div class="case-grid">
+          <div class="case-cell"><span class="n">01</span><b>Найм без завязки на руководителе</b><p>Рекрутер и технический специалист ведут найм — он больше не зависит от одного человека.</p></div>
+          <div class="case-cell"><span class="n">02</span><b>Команда с нуля за три недели</b><p>Монтажники, прораб, кладовщик, руководитель проекта.</p></div>
+          <div class="case-cell"><span class="n">03</span><b>Сдельная оплата труда</b><p>Платим за результат, а не за часы — производительность выросла.</p></div>
+          <div class="case-cell"><span class="n">04</span><b>Субподряд на объёмы</b><p>Подрядчики — на оплату за объём по понятным правилам.</p></div>
+          <div class="case-cell"><span class="n">05</span><b>Учёт выполненных работ</b><p>Видно, сколько и кем сделано — без споров по оплате.</p></div>
+          <div class="case-cell"><span class="n">06</span><b>Работа с заказчиком</b><p>Через нового руководителя показал, что всё под контролем.</p></div>
+          <div class="case-cell"><span class="n">07</span><b>Авторский отчёт «шахматка»</b><p>Матрица состояния по зданиям, этажам и системам. Такого отчёта в компании не было.</p></div>
+          <div class="case-cell"><span class="n">08</span><b>Ревизия и учёт на складе</b><p>С новым кладовщиком провели полную ревизию и завели новые таблицы учёта.</p></div>
+          <div class="case-cell"><span class="n">09</span><b>Документооборот</b><p>Систематизировал исполнительную документацию по объекту.</p></div>
+        </div>
+        <p class="case-result">Новая команда и система вывели компанию в лидеры среди подрядчиков: объект успешно сдали, а команда работала в той же структуре ещё два года — уже с другим руководителем.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- модалка Шина данных (экран 09) -->
+  <div class="modal" id="modal-bus">
+    <div class="modal-bd" data-close></div>
+    <div class="modal-sheet">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-body">
+        <h2 class="modal-h">Автоматизация: цифры сводятся сами</h2>
+        <p class="modal-text">Albato сводит данные со всей компании: из Bitrix24, чатов и Финтабло, метрики и Директа. Я получаю большинство данных в режиме реального времени. Дальше данные собираются в отчёты или передаются ИИ, и мы получаем актуальные цифры. Минимум ручного труда и ошибок.</p>
+      </div>
+      <div class="modal-media">
+        <img src="assets/albato.png" alt="Albato — десятки связок передачи данных между сервисами" id="busImg">
+      </div>
+    </div>
+  </div>
+
+  <!-- мобильный просмотрщик -->
+  <div class="viewer" id="viewer">
+    <button class="viewer-close" data-vclose>×</button>
+    <div class="viewer-scroll"><img id="viewerImg" src="" alt=""></div>
+  </div>
+
+  <script>
+    const stages = [...document.querySelectorAll('.stage')];
+    const mqMobile = window.matchMedia('(max-width:860px)');
+    function fit(){
+      if (mqMobile.matches){ stages.forEach(s => s.style.removeProperty('--s')); return; }
+      const s = Math.min(window.innerWidth * 0.94 / 1920, window.innerHeight * 0.94 / 1080);
+      stages.forEach(st => st.style.setProperty('--s', s));
+    }
+    window.addEventListener('resize', fit);
+    mqMobile.addEventListener('change', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    fit();
+
+    /* «копни глубже» модалки (любое число) + мобильный просмотрщик */
+    const viewer = document.getElementById('viewer'), viewerImg = document.getElementById('viewerImg');
+    function openViewer(src){ viewerImg.src = src; viewer.classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeViewer(){ viewer.classList.remove('open'); document.body.style.overflow=''; }
+    function closeModals(){ document.querySelectorAll('.modal.open').forEach(m=> m.classList.remove('open')); document.body.style.overflow=''; }
+    document.querySelectorAll('[data-modal-target]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ const m=document.getElementById(btn.dataset.modalTarget); if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; const v=m.querySelector('video'); if(v){ try{ v.currentTime=0; }catch(e){} v.play().catch(()=>{}); } } });
+    });
+    document.querySelectorAll('.modal [data-close]').forEach(el=> el.addEventListener('click', closeModals));
+
+    // слайдер академии — авто-смена каждые 4.5 секунды
+    const slider = document.getElementById('slider');
+    if (slider){
+      const slides = slider.querySelectorAll('.slide');
+      let si = 0;
+      setInterval(()=>{ slides[si].classList.remove('active'); si=(si+1)%slides.length; slides[si].classList.add('active'); }, 5500);
+    }
+
+    // карусель финансов (s5) — авто-смена + подпись из data-cap, без стрелок
+    const finSlider = document.getElementById('finSlider'), finCap = document.getElementById('finCap');
+    if (finSlider){
+      const fslides = [...finSlider.querySelectorAll('.fin-slide')];
+      let fci = 0;
+      const setFinCap = ()=>{ if(finCap) finCap.textContent = fslides[fci].dataset.cap || ''; };
+      setFinCap();
+      if (fslides.length > 1) setInterval(()=>{ fslides[fci].classList.remove('active'); fci=(fci+1)%fslides.length; fslides[fci].classList.add('active'); setFinCap(); }, 5500);
+    }
+
+    // мобильный pinch-zoom для плотных скринов в модалках
+    // галереи в модалках: авто-смена + стрелки + точки, пауза при наведении
+    document.querySelectorAll('.gallery').forEach(g=>{
+      const slides=[...g.querySelectorAll('.gslide')];
+      const dotsWrap=g.querySelector('.gdots');
+      const interval=parseInt(g.dataset.auto)||5000;
+      let idx=0, timer=null;
+      slides.forEach((s,i)=>{
+        const d=document.createElement('button'); d.className='gdot'+(i?'':' active'); d.addEventListener('click',()=>go(i)); dotsWrap.appendChild(d);
+        const im=s.querySelector('img'); im && im.addEventListener('click',()=>{ if(mqMobile.matches) openViewer(im.getAttribute('src')); });
+      });
+      const dots=[...dotsWrap.children];
+      function show(i){ slides[idx].classList.remove('active'); dots[idx].classList.remove('active'); idx=(i+slides.length)%slides.length; slides[idx].classList.add('active'); dots[idx].classList.add('active'); }
+      function play(){ clearInterval(timer); timer=setInterval(()=>show(idx+1), interval); }
+      function go(i){ show(i); play(); }
+      g.querySelector('[data-gnext]').addEventListener('click',()=>go(idx+1));
+      g.querySelector('[data-gprev]').addEventListener('click',()=>go(idx-1));
+      g.addEventListener('mouseenter',()=>clearInterval(timer));
+      g.addEventListener('mouseleave',play);
+      play();
+    });
+    const srezImg = document.getElementById('srezImg');
+    srezImg && srezImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/srez-op.png'); });
+    const funnelImg = document.getElementById('funnelImg');
+    funnelImg && funnelImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/deal-funnel.png'); });
+    const toImg = document.getElementById('toImg');
+    toImg && toImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/s4-bitrix.png'); });
+    const shahImg = document.getElementById('shahImg');
+    shahImg && shahImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/shahmatka.png'); });
+    document.querySelectorAll('.modal-media > img').forEach(im=>{ im.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer(im.getAttribute('src')); }); });
+    const aiImg = document.getElementById('aiImg');
+    aiImg && aiImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/ai-reports.png'); });
+    const schemaImg = document.getElementById('schemaImg');
+    schemaImg && schemaImg.addEventListener('click', ()=>{ if(mqMobile.matches) openViewer('assets/schema.svg'); });
+    viewer && viewer.querySelector('[data-vclose]').addEventListener('click', closeViewer);
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeModals(); viewer && viewer.classList.remove('open'); document.body.style.overflow=''; } });
+  </script>
+  <!-- build 20260615-160852 -->
+</body>
+</html>
